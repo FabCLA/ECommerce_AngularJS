@@ -21,6 +21,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table
 public class Client implements Serializable{
@@ -43,6 +45,7 @@ public class Client implements Serializable{
 		private String password;
 		private int tel;
 		
+		@JsonIgnore
 		@OneToMany(mappedBy="client",cascade=CascadeType.ALL)
 		private List<Commande> listeCommandes;
 		

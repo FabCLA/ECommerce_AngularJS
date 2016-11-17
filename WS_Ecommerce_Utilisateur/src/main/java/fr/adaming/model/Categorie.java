@@ -17,6 +17,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 @Table
@@ -36,6 +38,7 @@ public class Categorie implements Serializable{
 		
 		private String nom;
 		
+		@JsonIgnore
 		@OneToMany(mappedBy="categorie")
 		private List<Produit> listeProduit;
 //-------------------------------------------------------------------------------------------------------------

@@ -20,6 +20,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table
 public class Produit implements Serializable{
@@ -42,10 +44,12 @@ public class Produit implements Serializable{
 		private int quantite;
 		private boolean selection;
 		
+		@JsonIgnore
 		@ManyToOne
 		@JoinColumn(name="categorie_id", referencedColumnName="id_categorie")
 		private Categorie categorie;
 		
+		@JsonIgnore
 		@OneToMany(mappedBy="produit")
 		private List<LigneCommande> ligneC;
 //-------------------------------------------------------------------------------------------------------------
