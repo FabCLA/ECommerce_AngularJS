@@ -11,12 +11,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import fr.adaming.model.Categorie;
 import fr.adaming.model.Client;
+import fr.adaming.model.Commande;
 import fr.adaming.model.LigneCommande;
 import fr.adaming.model.Panier;
 import fr.adaming.model.Produit;
 import fr.adaming.model.ProduitPanier;
 import fr.adaming.service.ICategorieService;
 import fr.adaming.service.IClientService;
+import fr.adaming.service.ICommandeService;
 import fr.adaming.service.ILigneCommandeService;
 import fr.adaming.service.IPanierService;
 import fr.adaming.service.IProduitService;
@@ -44,6 +46,8 @@ public class UserRestController {
 	@Autowired
 	private ILigneCommandeService LCServ;
 	
+	@Autowired
+	private ICommandeService commandeServ;
 //----------------------------------------------------------------------------------------------------------------
 //---------------------------------2_Les constructeurs------------------------------------------------------------	
 	/**
@@ -88,6 +92,13 @@ public class UserRestController {
 	 */
 	public void setLCServ(ILigneCommandeService lCServ) {
 		LCServ = lCServ;
+	}
+
+	/**
+	 * @param commandeServ the commandeServ to set
+	 */
+	public void setCommandeServ(ICommandeService commandeServ) {
+		this.commandeServ = commandeServ;
 	}
 
 //----------------------------------------------------------------------------------------------------------------
@@ -211,17 +222,17 @@ public class UserRestController {
 //========================================== Ligne de commande ==================================================
 //==																										   ==	
 	@RequestMapping(value="/addLC",method=RequestMethod.POST,consumes="application/json")
-	public void addLigneC(LigneCommande LigneC){
+	public void addLigneC(@RequestBody LigneCommande LigneC){
 		LCServ.addLigneCService(LigneC);
 	}
 	
 	@RequestMapping(value="/deleteLC/{id}",method=RequestMethod.DELETE)
-	public void deleteLigneC(long id_LigneC){
+	public void deleteLigneC(@PathVariable("id") long id_LigneC){
 		LCServ.deleteLigneCService(id_LigneC);
 	}
 	
 	@RequestMapping(value="/updateLC",method=RequestMethod.PUT,consumes="application/json")
-	public void updateLigneC(LigneCommande LigneC){
+	public void updateLigneC(@RequestBody LigneCommande LigneC){
 		LCServ.updateLigneCService(LigneC);
 	}
 	
@@ -234,11 +245,27 @@ public class UserRestController {
 	public List<LigneCommande> getLCsByPanier(@RequestBody Panier panier){
 		return LCServ.getLCsByPanierService(panier);
 	}
+
+//==																										   ==
+//===============================================================================================================
 	
-	@RequestMapping(value="/getLCByIdCommande/{id}",method=RequestMethod.GET,produces="application/json")
-	public List<LigneCommande> getLigneCByIdCommande(@PathVariable("id")long id_commande){
-		return LCServ.getLigneCByIdCommandeService(id_commande);
+//============================================== Commande =======================================================
+//==																										   ==	
+	@RequestMapping(value="/addCommande",method=RequestMethod.POST,consumes="application/json")
+	public void addCommande(@RequestBody Commande cmd){
+		commandeServ.addCommandeService(cmd);
 	}
+	
+	@RequestMapping(value="/deleteCommande/{id}",method=RequestMethod.DELETE)
+	public void deleteComande(@PathVariable("id")long id_cmd){
+		commandeServ.deleteComandeService(id_cmd);
+	}
+	
+	@RequestMapping(value="/getCommandeByIdClient/{id}",method=RequestMethod.GET,produces="application/json")
+	public List<Commande> getCommandesByIdClient(@PathVariable("id")long id_client){
+		return commandeServ.getCommandesByIdClientService(id_client);
+	}
+	
 //==																										   ==
 //===============================================================================================================
 //----------------------------------------------------------------------------------------------------------------
