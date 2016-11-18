@@ -19,6 +19,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table
 public class Panier implements Serializable{
@@ -41,10 +43,12 @@ public class Panier implements Serializable{
 		
 		private boolean active;
 		
+		
 		@OneToOne(cascade=CascadeType.PERSIST)
 		@JoinColumn(name="client_id",referencedColumnName="id_client")
 		private Client clientP;
 		
+		@JsonIgnore
 		@OneToMany(mappedBy="panier",cascade=CascadeType.REMOVE)
 		private List<LigneCommande> listeLC;
 		

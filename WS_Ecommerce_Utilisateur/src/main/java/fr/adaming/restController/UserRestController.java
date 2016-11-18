@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import fr.adaming.model.Categorie;
+import fr.adaming.model.Client;
 import fr.adaming.model.Panier;
 import fr.adaming.model.Produit;
 import fr.adaming.service.ICategorieService;
+import fr.adaming.service.IClientService;
 import fr.adaming.service.IPanierService;
 import fr.adaming.service.IProduitService;
 
@@ -32,6 +34,10 @@ public class UserRestController {
 	
 	@Autowired
 	IPanierService panierServ;
+	
+	@Autowired
+	IClientService clientServ;
+	
 //----------------------------------------------------------------------------------------------------------------
 //---------------------------------2_Les constructeurs------------------------------------------------------------	
 	/**
@@ -63,8 +69,15 @@ public class UserRestController {
 	public void setPanierServ(IPanierService panierServ) {
 		this.panierServ = panierServ;
 	}
+	
+	/**
+	 * @param clientServ the clientServ to set
+	 */
+	public void setClientServ(IClientService clientServ) {
+		this.clientServ = clientServ;
+	}
 
-//----------------------------------------------------------------------------------------------------------------
+	//----------------------------------------------------------------------------------------------------------------
 //---------------------------------4_Méthodes---------------------------------------------------------------------
 	/**
 	 * 4_Méthodes
@@ -76,7 +89,7 @@ public class UserRestController {
 		produitServ.addProduitService(produit);
 	}
 	
-	@RequestMapping(value="/deleteProduit/{id}",method=RequestMethod.GET)
+	@RequestMapping(value="/deleteProduit/{id}",method=RequestMethod.DELETE)
 	public void deleteProduit(@PathVariable("id")long id_produit){
 		produitServ.deleteProduitService(id_produit);
 	}
@@ -118,6 +131,7 @@ public class UserRestController {
 	
 	@RequestMapping(value="/categorieByNom/{nom}",method=RequestMethod.GET,produces="application/json")
 	public Categorie getCategorieByNomService(@PathVariable("nom")String nom_cat){
+		System.out.println(categorieServ.getCategorieByNomService(nom_cat));
 		return categorieServ.getCategorieByNomService(nom_cat);
 	}
 //==																										   ==
@@ -130,18 +144,47 @@ public class UserRestController {
 		panierServ.addPanierService(panier);
 	}
 	
-	@RequestMapping(value="/deletePanier/{id}",method=RequestMethod.GET)
+	@RequestMapping(value="/deletePanier/{id}",method=RequestMethod.DELETE)
 	public void deletePanier(@PathVariable("id")long id_panier){
 		panierServ.deletePanierService(id_panier);
 	}
 	
-	@RequestMapping(value="/updatePanier",method=RequestMethod.PUT,consumes="application/json")
+	@RequestMapping(value="/updatePanier",method=RequestMethod.PUT,consumes="application/json",produces="application/json")
 	public void updatePanier(@RequestBody Panier panier){
 		panierServ.updatePanierService(panier);
+	}
+	
+	@RequestMapping(value="/isExistPanier")
+	public int isExist(){
+		return panierServ.isExistService();
+	}
+	
+	@RequestMapping(value="/getActivePanier",method=RequestMethod.GET,produces="application/json")
+	public Panier getActivePanier(){
+		return panierServ.getActivePanierService();
 	}
 //==																										   ==
 //===============================================================================================================
 
+//============================================ CLient ===========================================================
+//==																										   ==	
+	@RequestMapping(value="/addClient",method=RequestMethod.POST,consumes="application/json")
+	public void addClient(@RequestBody Client client){
+		clientServ.addClientService(client);
+	}
+	
+	@RequestMapping(value="/deleteClient/{id}",method=RequestMethod.DELETE)
+	public void deleteClient(@PathVariable("id")long id_client){
+		clientServ.deleteClientService(id_client);
+	}
+	
+	@RequestMapping(value="/updateClient",method=RequestMethod.PUT,consumes="application/json")
+	public void updateProduit(@RequestBody Client client){
+		clientServ.updateClientService(client);
+	}
+	
+//==																										   ==
+//===============================================================================================================
 //----------------------------------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------------------------------
 }
