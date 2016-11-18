@@ -11,10 +11,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import fr.adaming.model.Categorie;
 import fr.adaming.model.Client;
+import fr.adaming.model.LigneCommande;
 import fr.adaming.model.Panier;
 import fr.adaming.model.Produit;
+import fr.adaming.model.ProduitPanier;
 import fr.adaming.service.ICategorieService;
 import fr.adaming.service.IClientService;
+import fr.adaming.service.ILigneCommandeService;
 import fr.adaming.service.IPanierService;
 import fr.adaming.service.IProduitService;
 
@@ -27,16 +30,19 @@ public class UserRestController {
 	 * 1_Les propriétés (champs, attributs)
 	 */
 	@Autowired
-	IProduitService produitServ;
+	private IProduitService produitServ;
 	
 	@Autowired
-	ICategorieService categorieServ;
+	private ICategorieService categorieServ;
 	
 	@Autowired
-	IPanierService panierServ;
+	private IPanierService panierServ;
 	
 	@Autowired
-	IClientService clientServ;
+	private IClientService clientServ;
+	
+	@Autowired
+	private ILigneCommandeService LCServ;
 	
 //----------------------------------------------------------------------------------------------------------------
 //---------------------------------2_Les constructeurs------------------------------------------------------------	
@@ -77,7 +83,14 @@ public class UserRestController {
 		this.clientServ = clientServ;
 	}
 
-	//----------------------------------------------------------------------------------------------------------------
+	/**
+	 * @param lCServ the lCServ to set
+	 */
+	public void setLCServ(ILigneCommandeService lCServ) {
+		LCServ = lCServ;
+	}
+
+//----------------------------------------------------------------------------------------------------------------
 //---------------------------------4_Méthodes---------------------------------------------------------------------
 	/**
 	 * 4_Méthodes
@@ -99,7 +112,7 @@ public class UserRestController {
 		produitServ.updateProduitService(produit);
 	}*/
 	
-	@RequestMapping(value="/allproduit",method=RequestMethod.GET,produces="application/json")
+	@RequestMapping(value="/allProduit",method=RequestMethod.GET,produces="application/json")
 	public List<Produit> getAllProduit(){
 		return produitServ.getAllProduitService();
 	}
@@ -124,14 +137,13 @@ public class UserRestController {
 	
 //============================================ Catégorie ========================================================
 //==																										   ==	
-	@RequestMapping(value="/allcategorie",method=RequestMethod.GET,produces="application/json")
+	@RequestMapping(value="/allCategorie",method=RequestMethod.GET,produces="application/json")
 	public List<Categorie> getAllCategorie(){
 		return categorieServ.getAllCategorieService();
 	}
 	
 	@RequestMapping(value="/categorieByNom/{nom}",method=RequestMethod.GET,produces="application/json")
 	public Categorie getCategorieByNomService(@PathVariable("nom")String nom_cat){
-		System.out.println(categorieServ.getCategorieByNomService(nom_cat));
 		return categorieServ.getCategorieByNomService(nom_cat);
 	}
 //==																										   ==
@@ -183,6 +195,50 @@ public class UserRestController {
 		clientServ.updateClientService(client);
 	}
 	
+	@RequestMapping(value="/isExistClient/{mail}/{password}")
+	public int isExist(@PathVariable("mail")String mail, @PathVariable("password")String password){
+		return clientServ.isExistService(mail, password);
+	}
+	
+	@RequestMapping(value="/getClientByIdent/{mail}/{password}",method=RequestMethod.GET,produces="application/json")
+	public Client getClientByIdentifiant(@PathVariable("mail")String mail, @PathVariable("password")String password){
+		System.out.println(clientServ.getClientByIdentifiantService(mail, password));
+		return clientServ.getClientByIdentifiantService(mail, password);
+	}
+//==																										   ==
+//===============================================================================================================
+	
+//========================================== Ligne de commande ==================================================
+//==																										   ==	
+	@RequestMapping(value="/addLC",method=RequestMethod.POST,consumes="application/json")
+	public void addLigneC(LigneCommande LigneC){
+		LCServ.addLigneCService(LigneC);
+	}
+	
+	@RequestMapping(value="/deleteLC/{id}",method=RequestMethod.DELETE)
+	public void deleteLigneC(long id_LigneC){
+		LCServ.deleteLigneCService(id_LigneC);
+	}
+	
+	@RequestMapping(value="/updateLC",method=RequestMethod.PUT,consumes="application/json")
+	public void updateLigneC(LigneCommande LigneC){
+		LCServ.updateLigneCService(LigneC);
+	}
+	
+	@RequestMapping(value="/getLCByProduitPanier",method=RequestMethod.POST,consumes="application/json",produces="application/json")
+	public LigneCommande getLigneCByProduit(@RequestBody ProduitPanier produitPanier ){
+		return LCServ.getLigneCByProduitService(produitPanier.getProduit(), produitPanier.getPanier());
+	}
+	
+	@RequestMapping(value="/getLCByPanier",method=RequestMethod.POST,consumes="application/json",produces="application/json")
+	public List<LigneCommande> getLCsByPanier(@RequestBody Panier panier){
+		return LCServ.getLCsByPanierService(panier);
+	}
+	
+	@RequestMapping(value="/getLCByIdCommande/{id}",method=RequestMethod.GET,produces="application/json")
+	public List<LigneCommande> getLigneCByIdCommande(@PathVariable("id")long id_commande){
+		return LCServ.getLigneCByIdCommandeService(id_commande);
+	}
 //==																										   ==
 //===============================================================================================================
 //----------------------------------------------------------------------------------------------------------------

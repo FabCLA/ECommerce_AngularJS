@@ -40,6 +40,5 @@ public interface ILigneCommandeDao {
 	public void updateLigneCDao(LigneCommande LigneC);
 	public LigneCommande getLigneCByProduitDao(Produit produit, Panier panier);
 	public List<LigneCommande> getLCsByPanierDao(Panier panier);
-	public List<LigneCommande> getLigneCByIdCommandeDao(long id_commande);
 //-------------------------------------------------------------------------------------------------------------
 }
