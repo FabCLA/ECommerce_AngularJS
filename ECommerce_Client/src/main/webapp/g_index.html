@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<!-- JQuery Library -->
+<script type="text/javascript" src="static/resources/bootstrap/jquery.js"></script>
+
+
+<!-- Bootstrap Libraries -->
+<link rel="stylesheet" href="static/resources/bootstrap/bootstrap.css">
+<script type="text/javascript" src="static/resources/bootstrap/bootstrap.js"></script>
+
+<!-- Angular -->
+<script type="text/javascript" src="static/resources/angular/angular.js"></script>
+<script type="text/javascript" src="static/resources/angular/angular-route.js"></script>
+
+
+<!-- Mes Libraries -->
+<script type="text/javascript" src="static/js/gestionnaire/module/g_module.js"></script>
+<script type="text/javascript" src="static/js/gestionnaire/controller/g_controller.js"></script>
+<script type="text/javascript" src="static/js/gestionnaire/services/g_services.js"></script>
+<script type="text/javascript" src="static/js/gestionnaire/rooting/g_rooting.js"></script>
+
+
+</head>
+<body ng-app="monApp">
+
+<nav class="navbar navbar-inverse">
+	<ul class="nav nav-pills">
+  		<li role="presentation" class="active"><a href="#">Accueil</a></li>
+		<li role="presentation"><a href="#/liste">Liste des produits</a></li>
+		<li role="presentation"><a href="#">Recherche par id</a></li>
+		<li role="presentation"><a href="#">Ajouter un produit</a></li>
+		<li role="presentation"><a href="#">Supprimer un produit</a></li>
+		<li role="presentation"><a href="#">Modifier un produit</a></li>
+	</ul>
+</nav>
+
+<div class="container">
+	<div ng-view></div>
+</div>
+</body>
+</html>
