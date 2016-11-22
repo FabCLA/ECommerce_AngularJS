@@ -1,0 +1,80 @@
+
+
+<ul class="verti">
+	<li class="verti"><div class="col-sm-12 col-md-11"><h3>Recherche par:</h3></div></li>
+  	<li class="verti">
+	  	<div class="col-sm-12 col-md-11 col-lg-7"><br/>
+	  		<label>Id <input style="width: 3cm;" class="form-control" ng-model="search.id_produit"></label>
+	  	</div>
+  	</li>
+	<li class="verti">
+	 		<div class="col-sm-12 col-md-11"><br/>
+	    		<label>Prix max.<input style="width: 3cm;" class="form-control" ng-model="searchPrix" value="2000"></label>        
+	       	<input type="range" name="price-max" id="price-max" value="2000" min="0" max="2000" ng-model="searchPrix">
+		</div>
+	</li>
+	<li class="verti">
+		<div class="col-sm-12 col-md-9"><br/>
+			<label>Categorie</label>
+			<select class="form-control" name="repeatSelect" id="repeatSelect" ng-model="search2.categorie.id_categorie">
+				<option></option>
+				<option ng-repeat="cat in categorie" value="{{cat.id_categorie}}">{{cat.nom}}</option>
+		    </select>
+	    </div>
+	</li>
+</ul>
+
+
+
+<h1 align="center">Liste des produits</h1>      
+<div class="col-xs-12 col-sm-9 col-md-9 col-lg-10 col-lg-offset-2" >
+	<table class="table table-hover">
+		<thead style="background-color: green; color:white;">
+			<td>Id</td>
+			<td>Produits</td>
+			<td>Description</td>
+			<td>Prix</td>
+			<td>Quantite</td>
+			<td>Categorie</td>
+			<td>Actions</td>
+		</thead>
+		<tbody ng-repeat="p in produit | filter:search | lowerThan:searchPrix | filter:search2">
+			
+			<td>{{p.id_produit}}</td>
+			<td>
+				<output ng-show="!check1">{{p.nom}}</output>
+				<input class="form-control" type="text" ng-show="check1" value="{{p.nom}}" ng-model="p.nom">
+			</td>
+			<td>
+				<output ng-show="!check1">{{p.description}}</output>
+				<input class="form-control" type="text" ng-show="check1" value="{{p.description}}" ng-model="p.description">
+			</td>
+			<td>
+				<output ng-show="!check1">{{p.prix}}</output>
+				<input class="form-control" type="number" ng-show="check1" value="{{p.prix}}" ng-model="p.prix">
+			</td>
+			<td>
+				<output ng-show="!check1">{{p.quantite}}</output>
+				<input class="form-control" type="number" ng-show="check1" value="{{p.quantite}}" ng-model="p.quantite">
+			</td>
+			<td>				
+				<output ng-show="!check1">{{p.categorie.nom}}</output>
+				
+				<div class="form-group" ng-show="check1" >
+					<select class="form-control" name="repeatSelect" id="repeatSelect" ng-model="p.categorie.id_categorie">
+						<option ng-repeat="cat in categorie" value="{{cat.id_categorie}}">{{cat.nom}}</option>
+				    </select>
+				</div>
+			</td>
+			<td style="width: 7cm;"  ng-model="check1">				
+				<button class="btn btn-primary" ng-click="check1=true" ng-show="!check1">Modifier</button>
+				<button class="btn btn-primary" ng-click="modifierLien(p)" ng-show="check1">Valider</button>
+				
+				<button class="btn btn-warning" ng-click="doDeleteByIdLien(p)" >Supprimer</button>
+			</td>
+		</tbody>
+		<tfoot>
+			<td><button class="btn btn-success" ng-click="ajouter()" style="position: absolute; right: 200px;">Ajouter</button></td>
+		</tfoot>
+	</table>
+</div>

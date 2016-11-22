@@ -1,7 +1,7 @@
 monApp
 		.controller('getAllCtrl',function($scope,prodFactory){
 	
-		
+		$scope.searchPrix=2000;
 			prodFactory.getAll(function(callback){
 			$scope.produit=callback;			
 		});
@@ -45,6 +45,8 @@ monApp
 				});
 			});		
 		}
+		
+		
 		
 })
 		.controller('getAllCatCtrl',function($scope,catFactory){

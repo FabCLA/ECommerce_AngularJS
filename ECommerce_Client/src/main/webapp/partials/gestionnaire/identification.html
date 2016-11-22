@@ -1,0 +1,14 @@
+<form class="form-inline">
+  <div class="form-group">
+    <label class="sr-only" for="identifiant">Identifiant</label>
+    <input type="text" class="form-control" id="identifiant" value="{{g.login}}" ng-model="g.login" placeholder="Identifiant">
+  </div>
+  <br>
+  <div class="form-group">
+    <label class="sr-only" for="password">Mot de passe</label>
+    <input type="password" class="form-control" id="password" value="{{g.mdp}}" ng-model="g.mdp" placeholder="Mot de passe">
+  </div>
+  <br>
+
+  <button type="submit" class="btn btn-default" ng-click="doAuthent(g)">Connection</button>
+</form>

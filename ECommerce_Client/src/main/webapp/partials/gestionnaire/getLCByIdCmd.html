@@ -1,0 +1,35 @@
+<ul class="verti">
+	<li class="verti"><div class="col-sm-12 col-md-11"><h3>Recherche par:</h3></div></li>
+  	<li class="verti">
+	  	<div class="col-sm-12 col-md-11 col-lg-7"><br/>
+	  		<label>Id <input style="width: 3cm;" class="form-control" ng-model="search.id_LC"></label>
+	  	</div>
+  	</li>
+</ul>
+
+<h1 align="center">Liste des commandes d'un clients</h1>
+
+
+<div class="col-xs-12 col-sm-9 col-md-9 col-lg-10 col-lg-offset-2" >
+	<table class="table table-hover">
+		<thead style="background-color: green; color:white;">
+			<td>Id</td>
+			<td>Quantite</td>
+			<td>Prix</td>
+			<td>Action</td>
+		</thead>
+		<tbody ng-repeat="lc in lignecommande | filter:search">
+			
+			<td>{{lc.id_LC}}</td>
+			<td>
+				<output>{{lc.quantite}}</output>
+			</td>
+			<td>
+				<output>{{lc.prix}}</output>
+			</td>
+			<td style="width: 7cm;">					
+				<button class="btn btn-warning" ng-click="doDeleteLCByIdLien(lc)" >Supprimer</button>
+			</td>
+		</tbody>
+	</table>
+</div>

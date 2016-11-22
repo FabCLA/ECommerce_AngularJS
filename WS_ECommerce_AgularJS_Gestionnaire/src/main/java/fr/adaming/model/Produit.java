@@ -44,13 +44,13 @@ public class Produit implements Serializable{
 		private int quantite;
 		private boolean selection;
 		
-		@JsonIgnore
+		
 		@ManyToOne
 		@JoinColumn(name="categorie_id", referencedColumnName="id_categorie")
 		private Categorie categorie;
 		
 		@JsonIgnore
-		@OneToMany(mappedBy="produit")
+		@OneToMany(mappedBy="produit",cascade=CascadeType.REMOVE)
 		private List<LigneCommande> ligneC;
 //-------------------------------------------------------------------------------------------------------------
 //------------------------------2_Les constructeurs------------------------------------------------------------	

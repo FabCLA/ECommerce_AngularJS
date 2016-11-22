@@ -1,0 +1,36 @@
+<ul class="verti">
+	<li class="verti"><div class="col-sm-12 col-md-11"><h3>Recherche par:</h3></div></li>
+  	<li class="verti">
+	  	<div class="col-sm-12 col-md-11 col-lg-7"><br/>
+	  		<label>Id <input style="width: 3cm;" class="form-control" ng-model="search.id_commande"></label>
+	  	</div>
+  	</li>
+</ul>
+
+<h1 align="center">Liste des commandes d'un clients</h1>
+
+
+<div class="col-xs-12 col-sm-9 col-md-9 col-lg-10 col-lg-offset-2" >
+	<table class="table table-hover">
+		<thead style="background-color: green; color:white;">
+			<td>Id</td>
+			<td>Date de la commande</td>
+			<td>Actions</td>
+			<td>Navigation</td>
+		</thead>
+		<tbody ng-repeat="cmd in commande | filter:search">
+			
+			<td>{{cmd.id_commande}}</td>
+			<td>
+				<output ng-show="!check1">{{cmd.date_commande | date:'dd/MM/yyyy HH:mm:ss'}}</output>
+			</td>
+			<td>
+				<button class="btn btn-primary" ng-click="doGetLCByIdCmdLien(cmd)" >Ligne de commande</button>
+			</td>
+			<td style="width: 7cm;"  ng-model="check1">					
+				<button class="btn btn-warning" ng-click="doDeleteCmdByIdLien(cmd)" >Supprimer</button>
+			</td>
+			
+		</tbody>
+	</table>
+</div>

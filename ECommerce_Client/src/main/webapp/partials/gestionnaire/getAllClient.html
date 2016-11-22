@@ -1,0 +1,63 @@
+<ul class="verti">
+	<li class="verti"><div class="col-sm-12 col-md-11"><h3>Recherche par:</h3></div></li>
+  	<li class="verti">
+	  	<div class="col-sm-12 col-md-11 col-lg-7"><br/>
+	  		<label>Id <input style="width: 3cm;" class="form-control" ng-model="search.id_client"></label>
+	  	</div>
+  	</li>
+</ul>
+
+
+<h1 align="center">Liste des clients</h1>
+
+
+<div class="col-xs-12 col-sm-9 col-md-9 col-lg-10 col-lg-offset-2" >
+	<table class="table table-hover">
+		<thead style="background-color: green; color:white;">
+			<td>Id</td>
+			<td>Nom</td>
+			<td>Adresse</td>
+			<td>Mail</td>
+			<td>Mot de passe</td>
+			<td>Telephone</td>
+			<td>Actions</td>
+			<td>Navigation</td>
+		</thead>
+		<tbody ng-repeat="cli in client | filter:search">
+			
+			<td>{{cli.id_client}}</td>
+			<td>
+				<output ng-show="!check1">{{cli.nom}}</output>
+				<input class="form-control" type="text" ng-show="check1" value="{{cli.nom}}" ng-model="cli.nom">
+			</td>
+			<td>
+				<output ng-show="!check1">{{cli.adresse}}</output>
+				<input class="form-control" type="text" ng-show="check1" value="{{cli.adresse}}" ng-model="cli.adresse">
+			</td>
+			<td>
+				<output ng-show="!check1">{{cli.mail}}</output>
+				<input class="form-control" type="email" ng-show="check1" value="{{cli.mail}}" ng-model="cli.mail">
+			</td>
+			<td>
+				<output ng-show="!check1">{{cli.password}}</output>
+				<input class="form-control" type="text" ng-show="check1" value="{{cli.password}}" ng-model="cli.password">
+			</td>
+			<td>
+				<output ng-show="!check1">{{cli.tel}}</output>
+				<input class="form-control" type="tel" ng-show="check1" value="{{cli.tel}}" ng-model="cli.tel">
+			</td>
+			<td>
+				<button class="btn btn-primary" ng-click="doGetCmdByIdCliLien(cli)" >Commande</button>
+			</td>
+			<td style="width: 7cm;"  ng-model="check1">				
+				<button class="btn btn-primary" ng-click="check1=true" ng-show="!check1">Modifier</button>
+				<button class="btn btn-primary" ng-click="modifierClientLien(cli)" ng-show="check1">Valider</button>
+				
+				<button class="btn btn-warning" ng-click="doDeleteClientByIdLien(cli)" >Supprimer</button>
+			</td>
+		</tbody>
+		<tfoot>
+			<td><button class="btn btn-success" ng-click="ajouterClient()" style="position: absolute; right: 200px;">Ajouter</button></td>
+		</tfoot>
+	</table>
+</div>

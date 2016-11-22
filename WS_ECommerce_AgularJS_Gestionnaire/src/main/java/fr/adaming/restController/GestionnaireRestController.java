@@ -207,9 +207,9 @@ public class GestionnaireRestController {
 //==																										   ==	
 
 	
-	@RequestMapping(value="/getLCByPanier",method=RequestMethod.POST,consumes="application/json",produces="application/json")
-	public List<LigneCommande> getLCsByPanier(@RequestBody Panier panier){
-		return LCServ.getLCsByPanierService(panier);
+	@RequestMapping(value="/getLCByIdPanier/{id}",method=RequestMethod.GET,produces="application/json")
+	public List<LigneCommande> getLCsByPanier(@PathVariable("id") long id_panier){
+		return LCServ.getLigneCByIdPanierService(id_panier);
 	}
 	
 	@RequestMapping(value="/addLC",method=RequestMethod.POST,consumes="application/json")
