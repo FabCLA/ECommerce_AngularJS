@@ -5,6 +5,11 @@
 	  		<label>Id <input style="width: 3cm;" class="form-control" ng-model="search.id_client"></label>
 	  	</div>
   	</li>
+  	<li class="verti">
+	  	<div class="col-sm-12 col-md-11 col-lg-7"><br/>
+	  		<label>Nom <input style="width: 3cm;" class="form-control" ng-model="search.nom"></label>
+	  	</div>
+  	</li>
 </ul>
 
 
@@ -47,7 +52,7 @@
 				<input class="form-control" type="tel" ng-show="check1" value="{{cli.tel}}" ng-model="cli.tel">
 			</td>
 			<td>
-				<button class="btn btn-primary" ng-click="doGetCmdByIdCliLien(cli)" >Commande</button>
+				<button class="btn btn-primary" ng-click="doGetCmdByIdCliLien(cli)" >Commandes</button>
 			</td>
 			<td style="width: 7cm;"  ng-model="check1">				
 				<button class="btn btn-primary" ng-click="check1=true" ng-show="!check1">Modifier</button>
